@@ -1,0 +1,103 @@
+<%
+  title   = ''
+  img_txt = ''
+  if cond_vs_noncond == :conditional
+    title = 'with conditional potential'
+  else
+    if @data[:es_cells][cond_vs_noncond][:cells].first[:allele_type] == 'Deletion'
+      if @data[:ikmc_project] == "NorCOMM"
+        title   = ' (conditional ready)'
+        img_txt = 'These mutations can be made conditional by a &quot;docking&quot; procedure which uses the attP/puro docking site in the cassette.'
+      else
+        title   = 'without conditional potential (deletions)'
+        img_txt = 'Mutations of type &quot;Deletion&quot; are correctly targeted clones that have had the target exon removed. These mutations cannot be converted into conditional alleles.'
+      end
+    else
+      title   = 'without conditional potential'
+      img_txt = 'Mutations of type &quot;Without Conditional Potential&quot; are correctly targeted clones that have lost the 3&apos; LoxP site. These mutations cannot be converted into conditional alleles.'
+    end
+  end
+
+  order_cell_txt = escell_order_button( @data[:mgi_accession_id], @data[:marker_symbol], @data[:ikmc_project], @data[:project_id] )
+-%>
+
+<div class="dataset">
+  <h4 class="dataset_title toggle-open">ES Cell Clones <%= title.titlecase %></h4>
+  <div class="dataset_content">
+    <%- cells = @data[:es_cells][cond_vs_noncond][:cells] -%>
+
+    <% if !@data[:es_cells][cond_vs_noncond][:allele_img].nil? && show_allele_and_vector_images %>
+      <img src="<%= @data[:es_cells][cond_vs_noncond][:allele_img] %>" width="930px" />
+      <div class="clear"></div>
+
+      <% if cond_vs_noncond != 'conditional' and img_txt != '' %>
+        <p><strong>Note:</strong> <%= img_txt %></p>
+      <% end %>
+    <% end %>
+
+    <div class="clear"></div>
+    <%= partial( "project_report/ensembl_htgt_links", { :locals => { :escell => cells.first[:name] } }) %>
+
+    <table>
+      <thead>
+        <th class="hide_on_print"></th>
+        <th>ES Cell Clone</th>
+        <th>Targeting Vector</th>
+        <th>Allele</th>
+        <th>Allele Type</th>
+        <th><%= @data[:deletion] ? "Deleted" : "Floxed" %> Exon<%= "s" if @data[:floxed_exon_count] > 1 %></th>
+        <th>Parental ES Cell Line</th>
+        <th class="hide_on_print">Genbank File</th>
+        <th>Mouse</th>
+        <th>QC Data</th>
+      </thead>
+      <tbody class="products">
+        <% cells.each do |cell| %>
+          <tr>
+            <td class="hide_on_print">
+              <%= order_cell_txt %>
+            </td>
+            <td><%= cell[:name] %></td>
+            <td><%= cell[:targeting_vector] %></td>
+            <td>
+              <% unless cell[:allele_symbol_superscript].nil? %>
+                <%= @data[:marker_symbol] %><sup><%= cell[:allele_symbol_superscript] %></sup>
+              <% end %>
+            </td>
+            <td><%= cell[:allele_type] %> (<%= cell[:cassette_type] %> Cassette)</td>
+            <td><%= @data[:floxed_exon_link] %></td>
+            <td><%= cell[:parental_cell_line] %></td>
+            <td class="hide_on_print">
+              <% if @data[:es_cells][cond_vs_noncond][:allele_gb].nil? %>
+                <span style="color:#999;">unavailable</span>
+              <% else %>
+                <a href="<%= @data[:es_cells][cond_vs_noncond][:allele_gb] %>" target="_blank" class="file ext_link">view</a>
+              <% end %>
+            </td>
+            <td><%= cell[:mouse?] %></td>
+            <td>
+              <% if cell[:qc_count] > 0 %>
+                <a class="details_toggle">view</a>
+              <% else %>
+                <em style="color:#999;">no&nbsp;data&nbsp;reported</em>
+              <% end %>
+              &nbsp;&nbsp;
+              (&nbsp;<a href="http://www.knockoutmouse.org/kb/entry/78/" target="_blank" class="ext_link">about</a>&nbsp;)
+            </td>
+          </tr>
+          <% if cell[:qc_count] > 0 %>
+            <tr class="details">
+              <td colspan="10">
+                <%= partial('dataviews/ikmc-vectors-and-es-cells/escell_clone_qc', :locals => { :clone => cell }) %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+    <% if cells.size > 1 %>
+      <a class="products_toggle">show/hide more ES cells</a>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+</div>

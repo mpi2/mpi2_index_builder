@@ -1,0 +1,70 @@
+<div id="browse_controls">
+  <% @ms.config[:server][:browsable_content].each do |field,field_config| %>
+    <div>
+      <h6 class="single_parent_toggler_toggle slide<% if field.to_s == params[:field] %> open<% end %>"><%= field_config[:display_name] %></h6>
+      <div class="single_parent_toggler_content<% if field.to_s == params[:field] %> open<% end %>">
+        <ul>
+          <% field_config[:options].each do |option_name,display_opts| %>
+            <%
+              li_class     = []
+              
+              li_class.push('child')   if display_opts[:child]
+              li_class.push('current') if field.to_s == params[:field] and option_name.to_s == params[:query]
+              
+              count = 0
+              if @browse_counts[field] && @browse_counts[field][option_name]
+                count = @browse_counts[field][option_name]
+              end
+            %>
+              <li<%= ' class="' + li_class.join(" ") + '"' unless li_class.empty? %>>
+                <%=
+                  link_to(
+                    display_opts[:text] + ' <span class="count">(' + count.to_s + ')</span>',
+                    { :path => '/browse', :field => field, :query => option_name } 
+                  )
+                %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="browse_control_footer"></div>
+    </div>
+  <% end %>
+</div>
+
+<% if @results_title %>
+  <div id="search_results" class="browse_results">
+    <h2><%= @results_title %></h2>
+    <% if @results and !@results.empty? %>
+      <%= partial( :search_results ) %>
+    <% else %>
+      <em>Sorry, your search did not return any results.</em>
+    <% end %>
+  </div>
+<% else %>
+  <div class="browse_results larger">
+    <h2>Data Browsing</h2>
+    <p>
+      This page to allows you to browse the data within this portal.  Expand one of the 
+      browse controls to the left (by clicking on them), and then select the category for 
+      which you would like to see data.  The numbers in parenthesis indicate the number 
+      of genes that match (and will be returned by) the given browse category.
+    </p>
+    <h4>Browse by...</h4>
+    <ul>
+      <% @ms.config[:server][:browsable_content].each do |field,field_config| %>
+        <li>
+          <strong><%= field_config[:display_name] %></strong> - <%= field_config[:descriptive_text] %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% if @ms.config[:debug] %>
+  <div>
+    Solr search parameters used: <%= @solr_query %>
+  </div>
+<% end %>
+
+<div class="clear"></div>

@@ -1,0 +1,19 @@
+# encoding: utf-8
+
+begin
+  require "rubygems"
+  require "shoulda"
+  require "rcov/rcovtask"
+
+  desc "Analyze code coverage with tests"
+  Rcov::RcovTask.new do |t|
+    t.libs << "test"
+    t.test_files = FileList["test/test*.rb"]
+    t.verbose = true
+  end
+rescue LoadError
+  if /^1\.8/ === RUBY_VERSION
+    puts "[ERROR] Unable to load 'rcov' tasks - please run 'bundle install'"
+  end
+end
+

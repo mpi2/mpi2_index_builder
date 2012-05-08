@@ -1,0 +1,15 @@
+#! /usr/bin/env ruby
+# encoding: utf-8
+
+$:.unshift( "#{File.expand_path(File.dirname(__FILE__))}/../lib" )
+
+require 'irb'
+require 'wirble'
+require 'martsearch'
+
+puts "Loading MartSearch console in #{MartSearch::ENVIRONMENT} mode..."
+
+$ms = MartSearch::Controller.instance()
+puts " - the MartSearch::Controller object is availale as the variable '$ms'"
+
+IRB.start
