@@ -34,6 +34,7 @@ gem 'vlad-git',                           :require => false
 gem 'hoe',                                :require => false
 
 group :development, :test do
+  gem 'colorize'
   gem 'yard',                             :require => false
   gem 'shoulda',              '>=2.11',   :require => false
   gem 'vcr',                  '>=1.1',    :require => false

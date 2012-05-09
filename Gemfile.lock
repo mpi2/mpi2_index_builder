@@ -34,6 +34,7 @@ GEM
     childprocess (0.2.2)
       ffi (~> 1.0.6)
     closure-compiler (1.1.4)
+    colorize (0.5.8)
     crack (0.3.1)
     emk-sinatra-url-for (0.2.1)
       sinatra (>= 0.9.1.1)
@@ -137,6 +138,7 @@ DEPENDENCIES
   bundler (>= 1.0.0)
   capybara (>= 0.4.0)
   closure-compiler
+  colorize
   erubis
   hoe
   hoptoad_notifier

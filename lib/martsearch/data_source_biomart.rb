@@ -44,7 +44,8 @@ module MartSearch
       biomart_search_params = {
         :filters    => filters,
         :attributes => attributes.uniq,
-        :timeout    => MartSearch::Server.settings.biomart_search_params_timeout
+        #:timeout    => MartSearch::Server.settings.biomart_search_params_timeout
+        :timeout    => 2400
       }
 
       @ds.search(biomart_search_params)
@@ -65,7 +66,8 @@ module MartSearch
         :filters         => filters,
         :attributes      => conf[:attributes],
         :process_results => true,
-        :timeout         => MartSearch::Server.settings.biomart_search_options_timeout
+        #:timeout         => MartSearch::Server.settings.biomart_search_options_timeout
+        :timeout         => 200
       }
 
       if conf[:required_attributes]
