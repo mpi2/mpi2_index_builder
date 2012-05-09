@@ -179,6 +179,10 @@ module MartSearch
       send_xml_to_solr_generic("http://ikmc.vm.bytemark.co.uk:8983/solr/update")
     end
 
+    def send_xml_to_solr_htgt_web
+      send_xml_to_solr_generic("http://htgt-web.internal.sanger.ac.uk:8989/solr/update")
+    end
+
     def send_xml_to_solr_generic(index_url)
       pwd = Dir.pwd
       open_daily_directory( 'solr_xml', false )
