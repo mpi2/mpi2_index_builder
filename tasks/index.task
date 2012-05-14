@@ -36,6 +36,10 @@ begin
       @builder.send_xml_to_solr_htgt_web
     end
 
+    task :send_xml_to_solr_localhost do
+      @builder.send_xml_to_solr_localhost
+    end
+
     desc "Daily task to rebuild the Solr index"
     task :rebuild_index => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr]
 
@@ -47,6 +51,9 @@ begin
 
     desc "Test rebuild Solr index (sends to test solr htgt-web)"
     task :rebuild_index_htgt_web => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr_htgt_web]
+
+    desc "Test rebuild Solr index (sends to test solr localhost)"
+    task :rebuild_index_localhost => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr_localhost]
 
     desc "Generates the Solr 'schema.xml' file in the current directory"
     task :solr_schema_xml do

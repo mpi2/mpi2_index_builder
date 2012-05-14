@@ -173,11 +173,15 @@ module MartSearch
     end
 
     def send_xml_to_solr_vm
-      send_xml_to_solr_generic("http://ikmc.vm.bytemark.co.uk:8983/solr/update")
+      send_xml_to_solr_generic("http://ikmc.vm.bytemark.co.uk:8990/solr/update")
     end
 
     def send_xml_to_solr_htgt_web
       send_xml_to_solr_generic("http://htgt-web.internal.sanger.ac.uk:8989/solr/update")
+    end
+
+    def send_xml_to_solr_localhost
+      send_xml_to_solr_generic("localhost:8990/solr/update")
     end
 
     def send_xml_to_solr_generic(index_url)
@@ -280,6 +284,14 @@ module MartSearch
       #
       # @param [String] ds The name of the dataset that the data is from
       def process_dataset( ds )
+        #return if ds != ''
+        #return if ds != 'eurexpress'
+        #return if ds != 'wtsi-bacs'
+        #return if ds != 'wtsi-phenotyping-param_level_heatmap'
+        #return if ds != 'ensembl-mouse-go'
+        #@log.info "#{ds}"
+        #return
+
         @log.info "   - #{ds}: loading results file"
         results       = Marshal.load( File.new("#{ds}.marshal") )
         @log.info "   - #{ds}: results file loaded"
