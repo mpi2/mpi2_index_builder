@@ -181,7 +181,7 @@ module MartSearch
     end
 
     def send_xml_to_solr_localhost
-      send_xml_to_solr_generic("localhost:8990/solr/update")
+      send_xml_to_solr_generic("http://localhost:8990/solr/update")
     end
 
     def send_xml_to_solr_generic(index_url)
