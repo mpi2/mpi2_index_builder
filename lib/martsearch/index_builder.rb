@@ -284,7 +284,7 @@ module MartSearch
       #
       # @param [String] ds The name of the dataset that the data is from
       def process_dataset( ds )
-        #return if ds != ''
+        #return if ds != 'europhenome'
         #return if ds != 'eurexpress'
         #return if ds != 'wtsi-bacs'
         #return if ds != 'wtsi-phenotyping-param_level_heatmap'
