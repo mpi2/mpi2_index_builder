@@ -5,12 +5,8 @@
     "ikmc-dcc-knockout_attempts",
     "ikmc-idcc_targ_rep",
     "ikmc-imits",
-    "eurexpress",
     "europhenome",
-    "emma-strains",
-    "ensembl-mouse-homologs-human",
-    "ensembl-mouse-go",
-    "ikmc-omim"
+    "ensembl-mouse-homologs-human"
   ],
   "datasets": {}
 }
