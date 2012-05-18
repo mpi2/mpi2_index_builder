@@ -134,55 +134,21 @@ module MartSearch
       Dir.chdir(pwd)
     end
 
-    # Function to send all of the XML files to the Solr instance.
-    def send_xml_to_solr
-      pwd = Dir.pwd
-      open_daily_directory( 'solr_xml', false )
-
-      client    = build_http_client()
-      index_url = "#{@index_config[:builder_url]}/update"
-      url       = URI.parse( index_url )
-
-      client.start( url.host, url.port ) do |http|
-        @log.info "Sending XML files to Solr (#{index_url})"
-        Dir.glob("solr-xml-*.xml").each do |file|
-          @log.info "  - #{file}"
-          data = File.read( file )
-          res  = http.post( url.path, data, { 'Content-type' => 'text/xml; charset=utf-8' } )
-
-          if res.code.to_i != 200
-            raise "Error uploading #{file} to index!\ncode: #{res.code}\nbody: #{res.body}"
-          end
-        end
-
-        @log.info "  - commiting and optimising updates"
-        ['<commit/>','<optimize/>'].each do |task|
-          res = http.post( url.path, task, { 'Content-type' => 'text/xml; charset=utf-8' } )
-
-          if res.code.to_i != 200
-            raise "Error sending #{task} instruction to index!\ncode: #{res.code}\nbody: #{res.body}"
-          end
-        end
-      end
-
-      Dir.chdir(pwd)
-    end
-
-    def send_xml_to_solr_test
-      send_xml_to_solr_generic("http://deskpro101067.internal.sanger.ac.uk:8983/solr/update")
-    end
-
-    def send_xml_to_solr_vm
-      send_xml_to_solr_generic("http://ikmc.vm.bytemark.co.uk:8990/solr/update")
-    end
-
-    def send_xml_to_solr_htgt_web
-      send_xml_to_solr_generic("http://htgt-web.internal.sanger.ac.uk:8989/solr/update")
-    end
-
-    def send_xml_to_solr_localhost
-      send_xml_to_solr_generic("http://localhost:8990/solr/update")
-    end
+    #def send_xml_to_solr_test
+    #  send_xml_to_solr_generic("http://deskpro101067.internal.sanger.ac.uk:8983/solr/update")
+    #end
+    #
+    #def send_xml_to_solr_vm
+    #  send_xml_to_solr_generic("http://ikmc.vm.bytemark.co.uk:8990/solr/update")
+    #end
+    #
+    #def send_xml_to_solr_htgt_web
+    #  send_xml_to_solr_generic("http://htgt-web.internal.sanger.ac.uk:8989/solr/update")
+    #end
+    #
+    #def send_xml_to_solr_localhost
+    #  send_xml_to_solr_generic("http://localhost:8990/solr/update")
+    #end
 
     def send_xml_to_solr_generic(index_url)
       pwd = Dir.pwd
@@ -191,8 +157,8 @@ module MartSearch
       client    = build_http_client()
       url       = URI.parse( index_url )
 
-      warn "#### index_url: #{index_url}".red
-      warn "#### send_xml_to_solr_generic!".red
+      warn "#### index_url: #{index_url}".blue
+      #warn "#### send_xml_to_solr_generic!".red
 
       client.start( url.host, url.port ) do |http|
         @log.info "Sending XML files to Solr (#{index_url})"
