@@ -8,48 +8,12 @@ begin
 
   namespace :index do
 
-    #task :fetch_datasets do
-    #  @builder.fetch_datasets
-    #end
-    #
-    #task :process_datasets do
-    #  @builder.process_datasets
-    #end
-    #
-    #task :save_solr_document_xmls do
-    #  @builder.save_solr_document_xmls
-    #end
-    #
-    #task :send_xml_to_solr do
-    #  @builder.send_xml_to_solr
-    #end
-    #
-    #task :send_xml_to_solr_test do
-    #  @builder.send_xml_to_solr_test
-    #end
-    #
-    #task :send_xml_to_solr_vm do
-    #  @builder.send_xml_to_solr_vm
-    #end
-    #
-    #task :send_xml_to_solr_htgt_web do
-    #  @builder.send_xml_to_solr_htgt_web
-    #end
-    #
-    #task :send_xml_to_solr_localhost do
-    #  @builder.send_xml_to_solr_localhost
-    #end
-
     desc "Send XML to solr (provide url)"
     task :send_xml_to_solr, :url do |t, args|
       args.with_defaults(:url => "http://ikmc.vm.bytemark.co.uk:8990/solr/update")
       puts "URL is: #{args}"
       @builder.send_xml_to_solr_generic args[:url]
     end
-
-#send_xml_to_solr_generic("http://deskpro101067.internal.sanger.ac.uk:8983/solr/update")
-#task :my_task, :arg1, :arg2 do |t, args|
-#task :rebuild_index => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr]
 
     desc "Rebuild the Solr index (provide url)"
     task :rebuild_index, :url do |t, args|
@@ -61,21 +25,6 @@ begin
       @builder.save_solr_document_xmls
       @builder.send_xml_to_solr_generic args[:url]
     end
-
-    #desc "Daily task to rebuild the Solr index"
-    #task :rebuild_index => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr]
-    #
-    #desc "Test rebuild Solr index (sends to test solr)"
-    #task :rebuild_index_test => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr_test]
-    #
-    #desc "Test rebuild Solr index (sends to test solr vm)"
-    #task :rebuild_index_vm => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr_vm]
-    #
-    #desc "Test rebuild Solr index (sends to test solr htgt-web)"
-    #task :rebuild_index_htgt_web => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr_htgt_web]
-    #
-    #desc "Test rebuild Solr index (sends to test solr localhost)"
-    #task :rebuild_index_localhost => [:fetch_datasets, :process_datasets, :save_solr_document_xmls, :send_xml_to_solr_localhost]
 
     desc "Generates the Solr 'schema.xml' file in the current directory"
     task :solr_schema_xml do

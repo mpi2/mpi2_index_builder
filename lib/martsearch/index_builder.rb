@@ -134,22 +134,6 @@ module MartSearch
       Dir.chdir(pwd)
     end
 
-    #def send_xml_to_solr_test
-    #  send_xml_to_solr_generic("http://deskpro101067.internal.sanger.ac.uk:8983/solr/update")
-    #end
-    #
-    #def send_xml_to_solr_vm
-    #  send_xml_to_solr_generic("http://ikmc.vm.bytemark.co.uk:8990/solr/update")
-    #end
-    #
-    #def send_xml_to_solr_htgt_web
-    #  send_xml_to_solr_generic("http://htgt-web.internal.sanger.ac.uk:8989/solr/update")
-    #end
-    #
-    #def send_xml_to_solr_localhost
-    #  send_xml_to_solr_generic("http://localhost:8990/solr/update")
-    #end
-
     def send_xml_to_solr_generic(index_url)
       pwd = Dir.pwd
       open_daily_directory( 'solr_xml', false )
@@ -158,7 +142,6 @@ module MartSearch
       url       = URI.parse( index_url )
 
       warn "#### index_url: #{index_url}".blue
-      #warn "#### send_xml_to_solr_generic!".red
 
       client.start( url.host, url.port ) do |http|
         @log.info "Sending XML files to Solr (#{index_url})"
