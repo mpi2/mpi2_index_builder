@@ -40,9 +40,12 @@ begin
     #  @builder.send_xml_to_solr_localhost
     #end
 
-    #task :send_xml_to_solr_generic do
-    #  @builder.send_xml_to_solr_generic
-    #end
+    desc "Send XML to solr (provide url)"
+    task :send_xml_to_solr, :url do |t, args|
+      args.with_defaults(:url => "http://ikmc.vm.bytemark.co.uk:8990/solr/update")
+      puts "URL is: #{args}"
+      @builder.send_xml_to_solr_generic args[:url]
+    end
 
 #send_xml_to_solr_generic("http://deskpro101067.internal.sanger.ac.uk:8983/solr/update")
 #task :my_task, :arg1, :arg2 do |t, args|
