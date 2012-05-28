@@ -6,7 +6,6 @@
     "attribute_map": [
       { "attr": "mgi_accession_id", "idx": "mgi_accession_id_key", "use_to_map": true },
       { "attr": "marker_symbol",    "idx": "marker_symbol" },
-      { "attr": "marker_name",      "idx": "marker_name" },
       { "attr": "chromosome",       "idx": "chromosome" },
       { "attr": "strand",           "idx": "strand" },
       { "attr": "start",            "idx": "coord_start" },
