@@ -85,11 +85,6 @@
       "imits_report_micro_injection_aborted_date":           { "type": "string", "indexed": true, "stored": false, "multi_valued": true },
       "imits_report_genetic_background":                     { "type": "string", "indexed": true, "stored": false, "multi_valued": true },
 
-      "GeneName":       { "type": "text", "indexed": true, "stored": true, "multi_valued": true },
-      "GeneSymbol":     { "type": "gene_symbol", "indexed": true, "stored": true },
-      "id":             { "type": "string", "indexed": true, "stored": true, "required": true },
-      "GeneSynonym":    { "type": "text", "indexed": true, "stored": true, "multi_valued": true },
-
       "microinjection_centre_status":{ "type": "string", "indexed": true, "stored": false, "multi_valued": true },
 
       "phenotype":                   { "type": "text", "indexed": true, "stored": true, "multi_valued": true },
